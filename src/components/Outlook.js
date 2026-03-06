@@ -51,18 +51,33 @@ export default function Outlook({ data }) {
     topPartyText = `${topPartyObj.party} is projected to secure ${safeProjected} seats if current margins hold. `;
   }
 
-  // Calculate estimated final volume
-  const averageVotesPerConstituency = totalValidVotes / reportingConstituencies;
-  const estimatedFinalVolume = Math.round(
-    averageVotesPerConstituency * totalConstituencies,
-  );
+  // Calculate total votes for the leading party across all constituencies
+  let leadingPartyTotalVotes = 0;
+  if (
+    topPartyObj &&
+    topPartyObj.party !== "अन्य" &&
+    topPartyObj.party !== "Others"
+  ) {
+    data.results.forEach((c) => {
+      if (c.candidates) {
+        c.candidates.forEach((cand) => {
+          if (
+            cand.party === topPartyObj.party ||
+            cand.enPartyName === topPartyObj.party ||
+            topPartyObj.party.includes(cand.party)
+          ) {
+            leadingPartyTotalVotes += cand.votes;
+          }
+        });
+      }
+    });
+  }
 
-  // Create an arbitrary "participation trend" metric based on a theoretical 16,000,000 eligible voters for 2082
-  const theoreticalTotalVoters = 16000000;
-  const participationTrend = (
-    (totalValidVotes / theoreticalTotalVoters) *
-    100
-  ).toFixed(1);
+  // Calculate the percentage share
+  const topPartyPercentage =
+    totalValidVotes > 0
+      ? ((leadingPartyTotalVotes / totalValidVotes) * 100).toFixed(1)
+      : 0;
 
   return (
     <div className="bg-gradient-to-r from-blue-900/20 to-indigo-900/20 border border-blue-900/40 rounded-xl p-5 mb-8 relative overflow-hidden shadow-lg backdrop-blur-sm">
@@ -78,12 +93,23 @@ export default function Outlook({ data }) {
         out of{" "}
         <span className="text-white font-medium">{totalConstituencies}</span>{" "}
         constituencies currently reporting, {topPartyText}
-        Based on current reporting intensity, the estimated final volume of
-        valid votes is projected to reach{" "}
+        Out of the{" "}
         <span className="text-white font-medium">
-          {estimatedFinalVolume.toLocaleString()}
+          {totalValidVotes.toLocaleString()}
         </span>{" "}
-        nationwide.
+        valid votes counted so far,{" "}
+        <span className="text-white font-bold">
+          {topPartyObj?.party || "the leading party"}
+        </span>{" "}
+        has secured{" "}
+        <span className="text-white font-medium">
+          {leadingPartyTotalVotes.toLocaleString()}
+        </span>{" "}
+        votes, representing{" "}
+        <span className="text-white font-bold text-lg">
+          {topPartyPercentage}%
+        </span>{" "}
+        of the total popular vote.
       </p>
     </div>
   );
