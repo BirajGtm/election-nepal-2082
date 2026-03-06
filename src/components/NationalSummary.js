@@ -15,7 +15,7 @@ export default function NationalSummary({
         {selectedParty && (
           <button
             onClick={() => onSelectParty(null)}
-            className="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/50 rounded-full transition-all text-sm font-medium"
+            className="flex items-center gap-2 px-3 py-1.5 bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/20 hover:border-sky-500/50 rounded-full transition-all text-sm font-medium"
           >
             <svg
               className="w-4 h-4"

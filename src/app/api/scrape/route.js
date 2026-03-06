@@ -180,6 +180,15 @@ function parseDistrictPage(html, district) {
             "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Shram-Sanskriti-party.jpg";
           partyColor = "#8D6E63";
           enPartyName = "Shram Sanskriti Party";
+        } else if (
+          party.includes("राष्ट्रिय प्रजातन्त्र पार्टी") ||
+          party.includes("राप्रपा")
+        ) {
+          partyLogoUrl =
+            partyLogoUrl ||
+            "https://election.onlinekhabar.com/wp-content/uploads/2026/02/RPP.jpg";
+          partyColor = "#FF9800";
+          enPartyName = "Rastriya Prajatantra Party";
         }
 
         if (candidateMeta && candidateMeta.partyName !== "स्वतन्त्र") {
@@ -236,7 +245,11 @@ async function fetchAllDistrictsConcurrently(districts, concurrency = 15) {
 
 export const revalidate = 0; // Ensures API is always dynamic
 
-export async function GET() {
+let cachedData = null;
+let lastFetchTime = 0;
+let fetchPromise = null;
+
+async function performScrape() {
   try {
     const allDistricts = getDistricts();
 
@@ -248,8 +261,42 @@ export async function GET() {
     // Ensure we sort alphabetically or by district for predictability
     allConstituencies.sort((a, b) => a.label.localeCompare(b.label));
 
+    // Determine all actual leading parties based on constituencies
+    const leadingCounts = {};
+    allConstituencies.forEach((c) => {
+      if (
+        c.candidates &&
+        c.candidates.length > 0 &&
+        c.candidates[0].votes > 0
+      ) {
+        const party = c.candidates[0].party;
+        leadingCounts[party] = (leadingCounts[party] || 0) + 1;
+      }
+    });
+
+    // Remove 'अन्य' (Others) from the scraped summary
+    let baseSummary = nationalSummary.filter(
+      (ps) =>
+        !ps.party.includes("अन्य") && !ps.party.toLowerCase().includes("other"),
+    );
+
+    // Add any party that is leading but wasn't in the explicit top summary
+    Object.keys(leadingCounts).forEach((party) => {
+      const exists = baseSummary.find(
+        (p) =>
+          p.party === party ||
+          party.includes(p.party) ||
+          p.party.includes(party),
+      );
+      if (!exists) {
+        baseSummary.push({ party, won: 0, leading: leadingCounts[party] });
+      }
+    });
+
+    baseSummary.sort((a, b) => b.leading - a.leading);
+
     // Enhance National Summary colors and logos
-    const enrichedSummary = nationalSummary.map((ps) => {
+    const enrichedSummary = baseSummary.map((ps) => {
       let partyColor = "#9E9E9E";
       let partyLogoUrl = null;
       if (ps.party.includes("राष्ट्रिय स्वतन्त्र पार्टी")) {
@@ -272,23 +319,58 @@ export async function GET() {
         partyColor = "#8D6E63";
         partyLogoUrl =
           "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Shram-Sanskriti-party.jpg";
+      } else if (
+        ps.party.includes("राष्ट्रिय प्रजातन्त्र पार्टी") ||
+        ps.party.includes("राप्रपा")
+      ) {
+        partyColor = "#FF9800";
+        partyLogoUrl =
+          "https://election.onlinekhabar.com/wp-content/uploads/2026/02/RPP.jpg";
       }
 
       return { ...ps, partyColor, partyLogoUrl };
     });
 
-    return NextResponse.json(
-      {
-        success: true,
-        nationalSummary: enrichedSummary,
-        results: allConstituencies,
-      },
-      {
-        headers: {
-          "Cache-Control": "no-store, max-age=0",
-        },
-      },
-    );
+    cachedData = {
+      success: true,
+      nationalSummary: enrichedSummary,
+      results: allConstituencies,
+    };
+    lastFetchTime = Date.now();
+  } catch (error) {
+    console.error("Background scrape error:", error);
+  } finally {
+    fetchPromise = null;
+  }
+}
+
+export async function GET() {
+  const now = Date.now();
+
+  try {
+    // If no cache exists, we must block on the first fetch
+    if (!cachedData) {
+      if (!fetchPromise) {
+        fetchPromise = performScrape();
+      }
+      await fetchPromise;
+      if (!cachedData) throw new Error("Failed to initialize scrape data");
+      return NextResponse.json(cachedData, {
+        headers: { "Cache-Control": "no-store, max-age=0" },
+      });
+    }
+
+    // If cache is older than 2 minutes (120,000ms), trigger background refresh
+    if (now - lastFetchTime > 120000) {
+      if (!fetchPromise) {
+        fetchPromise = performScrape(); // Non-blocking!
+      }
+    }
+
+    // Immediately return whatever is cached (stale-while-revalidate pattern)
+    return NextResponse.json(cachedData, {
+      headers: { "Cache-Control": "no-store, max-age=0" },
+    });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: String(error) },

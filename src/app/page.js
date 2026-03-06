@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import NationalSummary from "@/components/NationalSummary";
 import HotseatCard from "@/components/HotseatCard";
+import Outlook from "@/components/Outlook";
 import defaultHotseats from "@/data/hotseats.json";
 
 export default function Home() {
@@ -142,10 +143,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Logo / Title Area */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium tracking-wider whitespace-nowrap">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium tracking-wider whitespace-nowrap">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
               </span>
               Nepal Elections 2082
             </div>
@@ -284,6 +285,9 @@ export default function Home() {
           </div>
         ) : data ? (
           <div className="space-y-12 animate-in fade-in duration-700">
+            {/* Outlook Projection Section - HIDE WHEN SEARCHING TEXT */}
+            {!searchQuery && !selectedParty && <Outlook data={data} />}
+
             {/* National Summary Section - HIDE WHEN SEARCHING TEXT */}
             {!searchQuery && (
               <section>
