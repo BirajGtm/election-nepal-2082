@@ -219,10 +219,30 @@ function parseDistrictPage(html, district) {
 
         let candidateMeta = null;
         if (meta && meta.candidates) {
-          // Find matching candidate in metadata by either name or party
-          candidateMeta = meta.candidates.find(
-            (c) => c.name === name || c.partyName === party,
-          );
+          candidateMeta = meta.candidates.find((c) => {
+            if (c.name === name || c.partyName === party) return true;
+
+            // Handle spelling typos (like Prithbi Subba Gurung vs Subwa Gurung) by matching first and last names
+            const nameParts = name.trim().split(/\s+/);
+            const cNameParts = c.name.trim().split(/\s+/);
+            if (nameParts.length > 1 && cNameParts.length > 1) {
+              if (
+                nameParts[0] === cNameParts[0] &&
+                nameParts[nameParts.length - 1] ===
+                  cNameParts[cNameParts.length - 1]
+              ) {
+                return true;
+              }
+            }
+
+            // Handle party name discrepancies
+            if (party.includes("एमाले") && c.partyName.includes("लेनिनवादी"))
+              return true;
+            if (party.includes("माओवादी") && c.partyName.includes("माओवादी"))
+              return true;
+
+            return false;
+          });
         }
 
         // Fallback manual checks for major parties if metadata wasn't matched perfectly
