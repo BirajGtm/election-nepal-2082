@@ -451,7 +451,7 @@ export async function GET() {
     // Immediately return whatever is cached (stale-while-revalidate pattern)
     return NextResponse.json(cachedData, {
       headers: {
-        "Cache-Control": "public, s-maxage=180, stale-while-revalidate=30",
+        "Cache-Control": "public, s-maxage=120, stale-while-revalidate=30",
       },
     });
   } catch (error) {
