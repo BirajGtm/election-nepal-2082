@@ -162,7 +162,7 @@ export default function Home() {
                 <img
                   src="https://npcdn.ratopati.com/election/media/setting/ratopati-logo_zD9OASMMFx.png"
                   alt="Ratopati Logo"
-                  className="h-3.5 object-contain grayscale hover:grayscale-0 transition-all"
+                  className="h-3.5 object-contain transition-all"
                 />
               </span>
             </a>
