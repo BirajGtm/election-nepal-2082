@@ -284,12 +284,34 @@ function parseDistrictPage(html, district) {
       });
 
     candidates.sort((a, b) => b.votes - a.votes);
+
+    // Detect if this constituency has an officially declared winner (candidate-win class)
+    const winnerRow = $(card).find(".candidate-row.candidate-win").first();
+    let winner = null;
+    if (winnerRow.length) {
+      const winnerNameEl = winnerRow.find(".title a");
+      const winnerName = winnerNameEl.length
+        ? winnerNameEl.text().trim()
+        : candidates[0]?.name || "";
+      const winnerImgEl = winnerRow.find(".candidate-media img");
+      const winnerImgUrl = winnerImgEl.length ? winnerImgEl.attr("src") : null;
+      winner = {
+        name: winnerName,
+        constituency: meta?.label || label,
+        party: candidates[0]?.party || "",
+        partyLogoUrl: candidates[0]?.partyLogoUrl || null,
+        partyColor: candidates[0]?.partyColor || "#9E9E9E",
+        candidateImgUrl: winnerImgUrl,
+      };
+    }
+
     results.push({
       label,
       slug,
       district,
       candidates,
       englishDistrict: meta ? meta.englishDistrict : districtFormatted,
+      winner,
     });
   });
 
@@ -330,11 +352,15 @@ async function performScrape() {
   try {
     const allDistricts = getDistricts();
 
-    const [nationalSummary, allConstituencies, winners] = await Promise.all([
+    const [nationalSummary, allConstituencies] = await Promise.all([
       fetchNationalSummary(),
       fetchAllDistrictsConcurrently(allDistricts, 20),
-      fetchWinners(),
     ]);
+
+    // Collect officially declared winners from constituency data
+    const winners = allConstituencies
+      .filter((c) => c.winner !== null)
+      .map((c) => c.winner);
 
     // Ensure we sort alphabetically or by district for predictability
     allConstituencies.sort((a, b) => a.label.localeCompare(b.label));
