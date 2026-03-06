@@ -69,16 +69,19 @@ async function fetchNationalSummary() {
 
     $(".parties-card").each((_, card) => {
       const party = $(card).find(".title").text().trim();
+      const logoUrl = $(card).find("img").attr("src") || null;
       const rows = $(card).find("table tr");
-      if (rows.length < 2) return;
-      const cols = $(rows[1]).find("td");
-      if (cols.length < 2) return;
+      const cols = rows.length >= 2 ? $(rows[1]).find("td") : [];
 
-      const won = nepaliToInt($(cols[0]).text().trim());
-      const leading = nepaliToInt($(cols[1]).text().trim());
+      const won = cols.length >= 1 ? nepaliToInt($(cols[0]).text().trim()) : 0;
+      const leading =
+        cols.length >= 2 ? nepaliToInt($(cols[1]).text().trim()) : 0;
+      const prVotes = nepaliToInt(
+        $(card).find(".vote-samanupatik").text().trim(),
+      );
 
-      if (won > 0 || leading > 0) {
-        summary.push({ party, won, leading });
+      if (won > 0 || leading > 0 || prVotes > 0) {
+        summary.push({ party, won, leading, prVotes, logoUrl });
       }
     });
     return summary;

@@ -5,6 +5,7 @@ import NationalSummary from "@/components/NationalSummary";
 import HotseatCard from "@/components/HotseatCard";
 import Outlook from "@/components/Outlook";
 import WonSeats from "@/components/WonSeats";
+import PRVotes from "@/components/PRVotes";
 import defaultHotseats from "@/data/hotseats.json";
 
 export default function Home() {
@@ -312,8 +313,13 @@ export default function Home() {
               data.winners &&
               data.winners.length > 0 && <WonSeats winners={data.winners} />}
 
-            {/* Outlook Projection Section - HIDE WHEN SEARCHING TEXT */}
+            {/* Outlook Projection Section */}
             {!searchQuery && !selectedParty && <Outlook data={data} />}
+
+            {/* PR Votes Section */}
+            {!searchQuery && !selectedParty && (
+              <PRVotes nationalSummary={data.nationalSummary} />
+            )}
 
             {/* National Summary Section - HIDE WHEN SEARCHING TEXT */}
             {!searchQuery && (
