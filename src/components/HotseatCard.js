@@ -1,4 +1,4 @@
-export default function HotseatCard({ result, isPinned, onTogglePin }) {
+export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
   if (!result || !result.candidates) return null;
 
   const topCandidates = result.candidates.slice(0, 3);
@@ -7,7 +7,13 @@ export default function HotseatCard({ result, isPinned, onTogglePin }) {
     .reduce((acc, c) => acc + c.votes, 0);
 
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-gray-700 group flex flex-col h-full relative">
+    <div
+      className={`bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group flex flex-col h-full relative ${
+        winner
+          ? "border-2 border-amber-400 shadow-amber-500/20 hover:shadow-amber-500/30"
+          : "border border-gray-800 hover:border-gray-700"
+      }`}
+    >
       <button
         onClick={() => onTogglePin && onTogglePin(result.slug)}
         className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-gray-900/50 hover:bg-gray-800 text-gray-400 hover:text-yellow-400 transition-colors"
@@ -35,6 +41,11 @@ export default function HotseatCard({ result, isPinned, onTogglePin }) {
         <p className="text-sm text-gray-400 capitalize">
           {result.englishDistrict || result.district} District
         </p>
+        {winner && (
+          <span className="inline-flex items-center gap-1 mt-1.5 text-xs bg-amber-400/15 text-amber-400 px-2 py-0.5 rounded-full border border-amber-400/30 font-medium">
+            <span>🏆</span> {winner.name} won
+          </span>
+        )}
       </div>
 
       <div className="p-5 flex-1 flex flex-col gap-3">

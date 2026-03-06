@@ -348,6 +348,7 @@ export default function Home() {
                       result={hs}
                       isPinned={true}
                       onTogglePin={togglePin}
+                      winner={hs.winner}
                     />
                   ))}
                 </div>
@@ -383,6 +384,7 @@ export default function Home() {
                       result={hs}
                       isPinned={pinnedSlugs.includes(hs.slug)}
                       onTogglePin={togglePin}
+                      winner={hs.winner}
                     />
                   ))}
                 </div>
