@@ -82,15 +82,15 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                   </div>
                 )}
               </div>
-              <div className="flex flex-col overflow-hidden min-w-0">
+              <div className="flex flex-col overflow-hidden min-w-0 py-0.5">
                 <span
-                  className={`font-medium text-sm truncate ${idx === 0 ? "text-white" : "text-gray-300"}`}
+                  className={`font-medium text-sm leading-tight line-clamp-2 ${idx === 0 ? "text-white" : "text-gray-300"}`}
                   title={c.romanizedName || c.name}
                 >
                   {c.name}
                 </span>
                 <span
-                  className="text-xs text-gray-500 truncate"
+                  className="text-xs text-gray-500 line-clamp-2 mt-0.5"
                   title={c.party}
                 >
                   {c.party}
