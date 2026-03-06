@@ -46,7 +46,7 @@ export default function Home() {
     });
   };
 
-  const [timeToReload, setTimeToReload] = useState(120);
+  const [timeToReload, setTimeToReload] = useState(180);
 
   const fetchData = async () => {
     try {
@@ -57,7 +57,7 @@ export default function Home() {
       if (!json.success) throw new Error(json.error || "API Error");
       setData(json);
       setLastUpdated(new Date());
-      setTimeToReload(120); // Reset timer on successful fetch
+      setTimeToReload(180); // Reset timer on successful fetch
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -68,12 +68,12 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
-    // 120000 ms = 2 minutes
-    const interval = setInterval(fetchData, 120000);
+    // 180000 ms = 3 minutes
+    const interval = setInterval(fetchData, 180000);
 
     // Timer interval (1 second)
     const countdownInterval = setInterval(() => {
-      setTimeToReload((prev) => (prev > 0 ? prev - 1 : 120));
+      setTimeToReload((prev) => (prev > 0 ? prev - 1 : 180));
     }, 1000);
 
     return () => {

@@ -356,7 +356,9 @@ export async function GET() {
       await fetchPromise;
       if (!cachedData) throw new Error("Failed to initialize scrape data");
       return NextResponse.json(cachedData, {
-        headers: { "Cache-Control": "no-store, max-age=0" },
+        headers: {
+          "Cache-Control": "public, s-maxage=180, stale-while-revalidate=30",
+        },
       });
     }
 
@@ -369,7 +371,9 @@ export async function GET() {
 
     // Immediately return whatever is cached (stale-while-revalidate pattern)
     return NextResponse.json(cachedData, {
-      headers: { "Cache-Control": "no-store, max-age=0" },
+      headers: {
+        "Cache-Control": "public, s-maxage=180, stale-while-revalidate=30",
+      },
     });
   } catch (error) {
     return NextResponse.json(
