@@ -143,7 +143,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Logo / Title Area */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
-            <div className="animated-badge-border inline-flex items-center gap-2 px-3 py-1 rounded-full text-red-400 text-xs font-medium tracking-wider whitespace-nowrap">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium tracking-wider whitespace-nowrap">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -155,7 +155,7 @@ export default function Home() {
               href="https://election.ratopati.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-800/60 hover:bg-gray-700/80 border border-gray-700/50 transition-colors text-xs text-gray-400 hover:text-white group"
+              className="animated-badge-border inline-flex items-center gap-2 px-3 py-1 rounded-full transition-colors text-xs text-gray-400 hover:text-white group"
             >
               <span>Data Source:</span>
               <img
@@ -169,7 +169,7 @@ export default function Home() {
               href="https://www.reddit.com/r/Nepali_Millennials/comments/1rly2w4/live_nepal_election_2082_live_poll_updates/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-800/60 hover:bg-orange-500/20 border border-gray-700/50 hover:border-orange-500/40 transition-colors text-xs text-gray-400 hover:text-orange-400 group"
+              className="animated-badge-border inline-flex items-center gap-2 px-3 py-1 rounded-full transition-colors text-xs text-gray-400 hover:text-orange-400 group"
             >
               <svg
                 className="w-3.5 h-3.5 text-orange-500"
