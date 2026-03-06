@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
 import fs from "fs";
 import path from "path";
+import partyLogos from "@/data/partyLogos.json";
 
 const NEPALI_DIGITS = "०१२३४५६७८९";
 const EN_DIGITS = "0123456789";
@@ -228,47 +229,16 @@ function parseDistrictPage(html, district) {
         let partyLogoUrl = candidateMeta?.partyLogoUrl || null;
         let partyColor = candidateMeta?.partyColor || "#9E9E9E";
         let romanizedName = candidateMeta?.romanizedName || name;
+        let candidateImgUrl = candidateMeta?.candidateImageUrl || null;
         let enPartyName = "?";
 
-        if (party.includes("राष्ट्रिय स्वतन्त्र पार्टी")) {
-          partyLogoUrl =
-            partyLogoUrl ||
-            "https://election.onlinekhabar.com/wp-content/uploads/2022/11/Ghanti.jpg";
-          partyColor = "#03A9F4";
-          enPartyName = "Rastriya Swatantra Party";
-        } else if (party.includes("नेपाली कांग्रेस")) {
-          partyLogoUrl =
-            partyLogoUrl ||
-            "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Congress.jpg";
-          partyColor = "#22c55e";
-          enPartyName = "Nepali Congress";
-        } else if (party.includes("एमाले")) {
-          partyLogoUrl =
-            partyLogoUrl ||
-            "https://election.onlinekhabar.com/wp-content/uploads/2026/02/UML.jpg";
-          partyColor = "#E53935";
-          enPartyName = "CPN (UML)";
-        } else if (party.includes("नेपाली कम्युनिष्ट पार्टी")) {
-          partyLogoUrl =
-            partyLogoUrl ||
-            "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Nepali-Communist-party.jpg";
-          partyColor = "#C62828";
-          enPartyName = "Nepal Communist Party";
-        } else if (party.includes("श्रम संस्कृति पार्टी")) {
-          partyLogoUrl =
-            partyLogoUrl ||
-            "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Shram-Sanskriti-party.jpg";
-          partyColor = "#8D6E63";
-          enPartyName = "Shram Sanskriti Party";
-        } else if (
-          party.includes("राष्ट्रिय प्रजातन्त्र पार्टी") ||
-          party.includes("राप्रपा")
-        ) {
-          partyLogoUrl =
-            partyLogoUrl ||
-            "https://election.onlinekhabar.com/wp-content/uploads/2026/02/RPP.jpg";
-          partyColor = "#FF9800";
-          enPartyName = "Rastriya Prajatantra Party";
+        const logoKey = Object.keys(partyLogos).find((k) => party.includes(k));
+        if (logoKey) {
+          const matchedParty = partyLogos[logoKey];
+          partyColor = matchedParty.color || partyColor;
+          if (!partyLogoUrl) {
+            partyLogoUrl = matchedParty.logo;
+          }
         }
 
         if (candidateMeta && candidateMeta.partyName !== "स्वतन्त्र") {
@@ -283,6 +253,7 @@ function parseDistrictPage(html, district) {
           partyColor,
           romanizedName,
           enPartyName,
+          candidateImgUrl,
         });
       });
 
@@ -405,34 +376,14 @@ async function performScrape() {
     // Enhance National Summary colors and logos
     const enrichedSummary = baseSummary.map((ps) => {
       let partyColor = "#9E9E9E";
-      let partyLogoUrl = null;
-      if (ps.party.includes("राष्ट्रिय स्वतन्त्र पार्टी")) {
-        partyColor = "#03A9F4";
-        partyLogoUrl =
-          "https://election.onlinekhabar.com/wp-content/uploads/2022/11/Ghanti.jpg";
-      } else if (ps.party.includes("नेपाली कांग्रेस")) {
-        partyColor = "#22c55e";
-        partyLogoUrl =
-          "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Congress.jpg";
-      } else if (ps.party.includes("एमाले")) {
-        partyColor = "#E53935";
-        partyLogoUrl =
-          "https://election.onlinekhabar.com/wp-content/uploads/2026/02/UML.jpg";
-      } else if (ps.party.includes("नेपाली कम्युनिष्ट पार्टी")) {
-        partyColor = "#C62828";
-        partyLogoUrl =
-          "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Nepali-Communist-party.jpg";
-      } else if (ps.party.includes("श्रम संस्कृति पार्टी")) {
-        partyColor = "#8D6E63";
-        partyLogoUrl =
-          "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Shram-Sanskriti-party.jpg";
-      } else if (
-        ps.party.includes("राष्ट्रिय प्रजातन्त्र पार्टी") ||
-        ps.party.includes("राप्रपा")
-      ) {
-        partyColor = "#FF9800";
-        partyLogoUrl =
-          "https://election.onlinekhabar.com/wp-content/uploads/2026/02/RPP.jpg";
+      let partyLogoUrl = ps.logoUrl || null; // scrape the one from PR first
+
+      const logoKey = Object.keys(partyLogos).find((k) => ps.party.includes(k));
+      if (logoKey) {
+        partyColor = partyLogos[logoKey].color || partyColor;
+        if (!partyLogoUrl) {
+          partyLogoUrl = partyLogos[logoKey].logo;
+        }
       }
 
       return { ...ps, partyColor, partyLogoUrl };

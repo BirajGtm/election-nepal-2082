@@ -1,0 +1,282 @@
+{
+  "राष्ट्रिय स्वतन्त्र पार्टी": {
+    "color": "#03A9F4",
+    "logo": "https://election.onlinekhabar.com/wp-content/uploads/2022/11/Ghanti.jpg"
+  },
+  "नेपाली कांग्रेस": {
+    "color": "#22c55e",
+    "logo": "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Congress.jpg"
+  },
+  "एमाले": {
+    "color": "#E53935",
+    "logo": "https://election.onlinekhabar.com/wp-content/uploads/2026/02/UML.jpg"
+  },
+  "नेपाली कम्युनिष्ट पार्टी": {
+    "color": "#C62828",
+    "logo": "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Nepali-Communist-party.jpg"
+  },
+  "श्रम संस्कृति पार्टी": {
+    "color": "#8D6E63",
+    "logo": "https://election.onlinekhabar.com/wp-content/uploads/2026/02/Shram-Sanskriti-party.jpg"
+  },
+  "राष्ट्रिय प्रजातन्त्र पार्टी": {
+    "color": "#FF9800",
+    "logo": "https://election.onlinekhabar.com/wp-content/uploads/2026/02/RPP.jpg"
+  },
+  "राप्रपा": {
+    "color": "#FF9800",
+    "logo": "https://election.onlinekhabar.com/wp-content/uploads/2026/02/RPP.jpg"
+  },
+  "नेकपा (एमाले)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/media/news/uml-1_zfT0bMAJFO.jpg"
+  },
+  "जनता समाजवादी पार्टी, नेपाल": {
+    "color": "#D81B60",
+    "logo": "https://npcdn.ratopati.com/media/news/jasapa_jsc15ncBiP.jpg"
+  },
+  "जनमत पार्टी": {
+    "color": "#1565C0",
+    "logo": "https://npcdn.ratopati.com/media/news/janamat-party_rGiReo6iJV.png"
+  },
+  "नागरिक उन्मुक्ति पार्टी, नेपाल(एकल चुनाव चिन्ह)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/media/news/nagarik-unmukti_AbIcBqhaUv.png"
+  },
+  "आम जनता पार्टी(एकल चुनाव चिन्ह)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/media/news/aam-janta_PWrvdtTyeO.png"
+  },
+  "नेपाल मजदुर किसान पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/media/news/kisan-party_LRTbbQqB5u.png"
+  },
+  "राष्ट्रिय जनमोर्चा": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/media/news/janamorcha_QdMNfA8Usx.png"
+  },
+  "उज्यालो नेपाल पार्टी": {
+    "color": "#FBC02D",
+    "logo": "https://npcdn.ratopati.com/election/media/party/ujalyo-nepal_H6K7wyfHMp.jpg"
+  },
+  "गान्धीवादी पार्टी नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/gandibadi-party-nepal_wSg6vKJmWi.jpg"
+  },
+  "राष्ट्रिय नागरिक पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-nagarik-party_tRL2Okb3om.jpg"
+  },
+  "नेपाल कम्युनिष्ट पार्टी (माले)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nekapa-maale_zgF7ncuuYa.jpg"
+  },
+  "नेपाल कम्युनिष्ट पार्टी (संयुक्त)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-communinst-party-samyukta_g5162iCCA1.jpg"
+  },
+  "नेपाल जनता पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-janata-party_VyTysm6DTu.jpg"
+  },
+  "नेपाल कम्युनिस्ट पार्टी (माओवादी)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepali-communist-party-maobadi_6dq6Zbkn5J.jpg"
+  },
+  "नेपाली जनता दल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepali-janata-dal_DM66Dho6x9.jpg"
+  },
+  "बहुजन शक्ति पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/bahujan-shakti-party_uREq64uRBW.jpg"
+  },
+  "मंगोल नेशनल अर्गनाइजेसन": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/media/news/mangol-national_iGNKTRhU9r.png"
+  },
+  "मधेशी जनअधिकार फोरम, मधेश": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/madhesi-janaadhikar-forum_htVcbiNOsq.jpg"
+  },
+  "राष्ट्रिय जनता पार्टी नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-janta-party_bWUgjs4LgX.jpg"
+  },
+  "राष्ट्रिय जनमुक्ति पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-janamukti-party_KYc6tqjSG5.jpg"
+  },
+  "संघीय लोकतान्त्रिक राष्ट्रिय मञ्च": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/sangiya-loktantrik-rastriya-manch_XunWFelkYA.jpg"
+  },
+  "नेपालका लागि नेपाली पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepali-party_0Fk4dtV5Wf.jpg"
+  },
+  "नेपाल कम्युनिष्ट पार्टी मार्क्सवादी (पुष्पलाल)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-communinst-party-maxist-pushpalal_UTYV9MXdW5.jpg"
+  },
+  "नेपाल लोकतान्त्रिक पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-loktantrik-party_h8tUIhRL7d.jpg"
+  },
+  "नेपाल सद्भावना पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-sadbhawana-party_xhsUyjObMp.jpg"
+  },
+  "मितेरी पार्टी नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/miteri-party_wuOxoyVx81.jpg"
+  },
+  "नेपाल जनमुक्ति पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-janamukti-party_1vtICYlEBk.jpg"
+  },
+  "श्रम संस्कृति पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/shram-sanskriti-party_jrxdNsjzjb.jpg"
+  },
+  "जनता समाजवादी पार्टी(एकल चुनाव चिन्ह)": {
+    "color": "#D81B60",
+    "logo": "https://npcdn.ratopati.com/election/media/party/janta-samajbad_BCQUt4fKv4.jpg"
+  },
+  "प्रगतिशील लोकतान्त्रिक पार्टी": {
+    "color": "#43A047",
+    "logo": "https://npcdn.ratopati.com/election/media/party/pragati-loktantrik-party_Zfz2IhqXrN.jpg"
+  },
+  "राष्ट्रिय परिवर्तन पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-paribartan-party_vuCPqXoOfg.jpg"
+  },
+  "राष्ट्रिय मुक्ति पार्टी नेपाल(एकल चुनाव चिन्ह)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-mukti-party-nepal_YnUThMC4YH.jpg"
+  },
+  "नेशनल रिपब्लिक नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/national-republic-nepal_fheDTJViiG.jpg"
+  },
+  "पिपुल फर्ष्ट पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/people-first-party_Tspm8n3yZX.jpg"
+  },
+  "नेपाली जनश्रमदान संस्कृति पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepali-janashramdan-sanskriti-party_CuzJKCIoqA.jpg"
+  },
+  "राष्ट्रिय उर्जाशील पार्टी, नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-urjasil-party_0qhoMJO9RP.jpg"
+  },
+  "संयुक्त नागरिक पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/samuka-nagarik-party_0KUkXykmZo.jpg"
+  },
+  "जय मातृभूमि पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/jaya-matribhumi-party_fuTuIlSo8s.jpg"
+  },
+  "राष्ट्र निर्माण दल नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastra-nirmal-dal-nepal_FoZXRXFuFI.jpg"
+  },
+  "समावेशी समाजवादी पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/samabesi-samajbadi-party_IychTZKdSx.jpg"
+  },
+  "सार्वभौम नागरिक पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/sarwabhaum-nagarik-party_YEbXnnLk13.jpg"
+  },
+  "राष्ट्रिय साझा पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-shaja-party_suAKsh4U6F.jpg"
+  },
+  "समावेशी समाजवादी पार्टी नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/samabesi-samajbadi-party-nepal_7DKSRkHjkj.jpg"
+  },
+  "नागरिक सर्वोच्चता पार्टी नेपाल(एकल चुनाव चिन्ह)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nagarik-sarocha-party_62WvAIde2M.jpg"
+  },
+  "नेपाल जनता संरक्षण पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-janata-samrakshan-party_oDJLutiE85.jpg"
+  },
+  "राष्ट्रिय एकता दल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-ekata-dal_fB1rGeLyMp.jpg"
+  },
+  "स्वाभिमान पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/swavhiman-party_azPPZLtz61.jpg"
+  },
+  "नेपाल संघीय समाजवादी पार्टी(एकल चुनाव चिन्ह)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-sanghiya-samajbadi-party_3N1W13iNNj.jpg"
+  },
+  "जन अधिकार पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/jana-adhikar-party_cRvNdLpdLH.jpg"
+  },
+  "जनता लोकतान्त्रिक पार्टी, नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/janta-loktantrik-party_kYF07RsaK4.jpg"
+  },
+  "बहुजन एकता पार्टी नेपाल(एकल चुनाव चिन्ह)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/bahujan-ekata-party-nepal_oLyQqvpx5Y.jpg"
+  },
+  "इतिहासिक जनता पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/itihasik-janata-party_1mYJ1OYnSs.jpg"
+  },
+  "जनादेश पार्टी नेपाल(एकल चुनाव चिन्ह)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/janadesh-party-nepal_enEQoijwOF.jpg"
+  },
+  "राष्ट्रिय मुक्ति आन्दोलन, नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-mukti-andolan_sukvkljWQk.jpg"
+  },
+  "गतिशील लोकतान्त्रिक पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/gatisil-loktantrik-party_WvBDGHu3AS.jpg"
+  },
+  "युनाईटेड नेपाल डिम��क्रयाटीक पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/united-nepal-democracy-party_0JjsPBcwWK.jpg"
+  },
+  "प्रजातान्त्रिक पार्टी नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/prajatantrik-party-nepal_FAmpMpYjuC.jpg"
+  },
+  "नेपाल जनसेवा पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-janasewa-party_Fm6ky34Qjg.jpg"
+  },
+  "त्रिमूल नेपाल": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/trimool-nepal_Q3sCZOJbTV.jpg"
+  },
+  "नेपाल कम्युनिष्ट पार्टी (माक्र्सवादी)(एकल चुनाव चिन्ह)": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-communist-party-makwadi_i5a42MKk4K.jpg"
+  },
+  "नेपाल मानवतावादी पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-manabtabadi-party_y0Z7WjGhbV.jpg"
+  },
+  "नेपाल मातृभूमि पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/nepal-matribhumi-party_CRiI40rtHV.jpg"
+  },
+  "राष्ट्रिय जनमत पार्टी": {
+    "color": "#9E9E9E",
+    "logo": "https://npcdn.ratopati.com/election/media/party/rastriya-janamat-party_w5syiytbUs.jpg"
+  }
+}

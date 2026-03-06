@@ -65,21 +65,32 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
             }}
           >
             <div className="flex items-center gap-3 min-w-0">
-              {c.partyLogoUrl ? (
-                <div className="w-8 h-8 rounded-full overflow-hidden bg-white flex-shrink-0 border border-gray-600">
-                  <img
-                    src={c.partyLogoUrl}
-                    alt={c.party}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ) : (
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${idx === 0 ? "bg-amber-500/20 text-amber-500 border border-amber-500/30" : "bg-gray-800 text-gray-400 border border-gray-700"}`}
-                >
-                  {idx + 1}
-                </div>
-              )}
+              <div className="relative w-10 h-10 flex-shrink-0">
+                {c.candidateImgUrl ? (
+                  <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-800 border border-gray-600">
+                    <img
+                      src={c.candidateImgUrl}
+                      alt={c.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${idx === 0 ? "bg-amber-500/20 text-amber-500 border border-amber-500/30" : "bg-gray-800 text-gray-400 border border-gray-700"}`}
+                  >
+                    {idx + 1}
+                  </div>
+                )}
+                {c.partyLogoUrl && (
+                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full overflow-hidden bg-white border border-gray-700 shadow-sm">
+                    <img
+                      src={c.partyLogoUrl}
+                      alt={c.party}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+              </div>
               <div className="flex flex-col overflow-hidden min-w-0">
                 <span
                   className={`font-medium text-sm truncate ${idx === 0 ? "text-white" : "text-gray-300"}`}
