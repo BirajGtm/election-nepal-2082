@@ -81,15 +81,6 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                     {idx + 1}
                   </div>
                 )}
-                {c.partyLogoUrl && (
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full overflow-hidden bg-white border border-gray-700 shadow-sm">
-                    <img
-                      src={c.partyLogoUrl}
-                      alt={c.party}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
               </div>
               <div className="flex flex-col overflow-hidden min-w-0">
                 <span
@@ -106,7 +97,16 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                 </span>
               </div>
             </div>
-            <div className="text-right flex-shrink-0 ml-2">
+            <div className="flex items-center gap-2 justify-end flex-shrink-0 ml-2">
+              {c.partyLogoUrl && (
+                <div className="w-6 h-6 rounded-full overflow-hidden bg-white border border-gray-700 shadow-sm flex-shrink-0">
+                  <img
+                    src={c.partyLogoUrl}
+                    alt={c.party}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
               <span
                 className={`font-bold tabular-nums ${idx === 0 ? "text-emerald-400 text-lg" : "text-gray-300"}`}
               >
