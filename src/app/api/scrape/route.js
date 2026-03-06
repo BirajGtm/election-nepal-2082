@@ -59,36 +59,56 @@ function getConstituencyMap() {
   return map;
 }
 
-async function fetchNationalSummary() {
-  try {
-    const res = await fetch("https://election.ratopati.com/", {
-      cache: "no-store",
-    });
-    const html = await res.text();
-    const $ = cheerio.load(html);
-    const summary = [];
+async function fetchNationalSummary(retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
-    $(".parties-card").each((_, card) => {
-      const party = $(card).find(".title").text().trim();
-      const logoUrl = $(card).find("img").attr("src") || null;
-      const rows = $(card).find("table tr");
-      const cols = rows.length >= 2 ? $(rows[1]).find("td") : [];
+      const res = await fetch("https://election.ratopati.com/", {
+        cache: "no-store",
+        signal: controller.signal,
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; ElectionBot/1.0)",
+          Connection: "keep-alive",
+        },
+      });
+      clearTimeout(timeoutId);
 
-      const won = cols.length >= 1 ? nepaliToInt($(cols[0]).text().trim()) : 0;
-      const leading =
-        cols.length >= 2 ? nepaliToInt($(cols[1]).text().trim()) : 0;
-      const prVotes = nepaliToInt(
-        $(card).find(".vote-samanupatik").text().trim(),
-      );
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      const html = await res.text();
+      const $ = cheerio.load(html);
+      const summary = [];
 
-      if (won > 0 || leading > 0 || prVotes > 0) {
-        summary.push({ party, won, leading, prVotes, logoUrl });
+      $(".parties-card").each((_, card) => {
+        const party = $(card).find(".title").text().trim();
+        const logoUrl = $(card).find("img").attr("src") || null;
+        const rows = $(card).find("table tr");
+        const cols = rows.length >= 2 ? $(rows[1]).find("td") : [];
+
+        const won =
+          cols.length >= 1 ? nepaliToInt($(cols[0]).text().trim()) : 0;
+        const leading =
+          cols.length >= 2 ? nepaliToInt($(cols[1]).text().trim()) : 0;
+        const prVotes = nepaliToInt(
+          $(card).find(".vote-samanupatik").text().trim(),
+        );
+
+        if (won > 0 || leading > 0 || prVotes > 0) {
+          summary.push({ party, won, leading, prVotes, logoUrl });
+        }
+      });
+      return summary;
+    } catch (error) {
+      if (i === retries) {
+        console.error(
+          "Failed to fetch national summary after retries",
+          error.message,
+        );
+        return [];
       }
-    });
-    return summary;
-  } catch (error) {
-    console.error("Failed to fetch national summary", error);
-    return [];
+      await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
+    }
   }
 }
 
@@ -312,15 +332,35 @@ function parseDistrictPage(html, district) {
   return results;
 }
 
-async function fetchDistrict(district) {
-  try {
-    const res = await fetch(`${BASE_URL}/${district}`); // removed no-store for individual districts to avoid hammering if requested rapidly, but Next.js behavior handles this in GET
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-    const html = await res.text();
-    return parseDistrictPage(html, district);
-  } catch (error) {
-    console.error(`Failed to fetch district ${district}:`, error);
-    return [];
+async function fetchDistrict(district, retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
+
+      const res = await fetch(`${BASE_URL}/${district}`, {
+        signal: controller.signal,
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; ElectionBot/1.0)",
+          Connection: "keep-alive",
+        },
+      });
+      clearTimeout(timeoutId);
+
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      const html = await res.text();
+      return parseDistrictPage(html, district);
+    } catch (error) {
+      if (i === retries) {
+        console.error(
+          `Failed to fetch district ${district} after ${retries} retries:`,
+          error.message,
+        );
+        return [];
+      }
+      // Exponential backoff delay: 1s, 2s
+      await new Promise((r) => setTimeout(r, 1000 * (i + 1)));
+    }
   }
 }
 
@@ -348,7 +388,7 @@ async function performScrape() {
 
     const [nationalSummary, allConstituencies] = await Promise.all([
       fetchNationalSummary(),
-      fetchAllDistrictsConcurrently(allDistricts, 20),
+      fetchAllDistrictsConcurrently(allDistricts, 10), // Lower concurrency to prevent socket exhaustion
     ]);
 
     // Collect officially declared winners from constituency data
