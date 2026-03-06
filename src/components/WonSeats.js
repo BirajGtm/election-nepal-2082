@@ -1,15 +1,112 @@
 "use client";
 import { useState } from "react";
 
-const INITIAL_SHOW = 5;
+function PartyWinCard({ party, wins }) {
+  const [open, setOpen] = useState(false);
+  const first = wins[0];
+
+  return (
+    <div
+      className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden transition-all hover:border-gray-700"
+      style={{ borderTopColor: first.partyColor, borderTopWidth: "3px" }}
+    >
+      {/* Party Header — always visible */}
+      <button
+        onClick={() => setOpen((p) => !p)}
+        className="w-full flex items-center justify-between gap-3 p-4 group"
+      >
+        <div className="flex items-center gap-3">
+          {first.partyLogoUrl ? (
+            <div className="w-9 h-9 rounded-full overflow-hidden bg-white flex-shrink-0 border border-gray-700">
+              <img
+                src={first.partyLogoUrl}
+                alt={party}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <div
+              className="w-9 h-9 rounded-full flex-shrink-0"
+              style={{ background: first.partyColor + "33" }}
+            />
+          )}
+          <div className="text-left">
+            <p
+              className="text-sm font-semibold text-white leading-tight truncate max-w-[180px]"
+              title={party}
+            >
+              {party || "Independent"}
+            </p>
+            <p className="text-xs text-gray-500">
+              {wins.length} seat{wins.length > 1 ? "s" : ""} won
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span
+            className="text-xl font-bold"
+            style={{ color: first.partyColor }}
+          >
+            {wins.length}
+          </span>
+          <svg
+            className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+      </button>
+
+      {/* Winner List — collapsible */}
+      {open && (
+        <div className="border-t border-gray-800 divide-y divide-gray-800/60">
+          {wins.map((w, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-between px-4 py-2.5 gap-3"
+            >
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm font-medium text-white truncate">
+                  {w.name}
+                </span>
+                <span className="text-xs text-gray-500 truncate">
+                  {w.constituency}
+                </span>
+              </div>
+              <span className="text-xs bg-emerald-500/15 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/20 flex-shrink-0 font-medium">
+                WON
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function WonSeats({ winners }) {
-  const [showAll, setShowAll] = useState(false);
-
   if (!winners || winners.length === 0) return null;
 
-  const visible = showAll ? winners : winners.slice(0, INITIAL_SHOW);
-  const hasMore = winners.length > INITIAL_SHOW;
+  // Group by party
+  const byParty = {};
+  winners.forEach((w) => {
+    const key = w.party || "Independent";
+    if (!byParty[key]) byParty[key] = [];
+    byParty[key].push(w);
+  });
+
+  // Sort parties by win count desc
+  const parties = Object.entries(byParty).sort(
+    (a, b) => b[1].length - a[1].length,
+  );
 
   return (
     <section className="mb-8">
@@ -22,88 +119,11 @@ export default function WonSeats({ winners }) {
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-        {visible.map((winner, idx) => (
-          <div
-            key={idx}
-            className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex flex-col gap-2 hover:border-emerald-500/30 transition-all group relative overflow-hidden"
-            style={{
-              borderLeftColor: winner.partyColor,
-              borderLeftWidth: "3px",
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-5 rounded-xl transition-opacity"
-              style={{ background: winner.partyColor }}
-            />
-
-            <div className="flex items-center gap-2">
-              {winner.partyLogoUrl ? (
-                <div className="w-7 h-7 rounded-full overflow-hidden bg-white flex-shrink-0 border border-gray-700">
-                  <img
-                    src={winner.partyLogoUrl}
-                    alt={winner.party}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ) : (
-                <div
-                  className="w-7 h-7 rounded-full flex-shrink-0"
-                  style={{ background: winner.partyColor + "33" }}
-                />
-              )}
-              <span
-                className="text-xs font-medium truncate"
-                style={{ color: winner.partyColor }}
-                title={winner.party}
-              >
-                {winner.party || "Independent"}
-              </span>
-            </div>
-
-            <p
-              className="text-sm font-semibold text-white leading-tight"
-              title={winner.name}
-            >
-              {winner.name}
-            </p>
-            <p
-              className="text-xs text-gray-500 truncate"
-              title={winner.constituency}
-            >
-              {winner.constituency}
-            </p>
-
-            <div className="absolute top-2 right-2">
-              <span className="text-xs bg-emerald-500/15 text-emerald-400 px-1.5 py-0.5 rounded font-medium border border-emerald-500/20">
-                WON
-              </span>
-            </div>
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        {parties.map(([party, wins]) => (
+          <PartyWinCard key={party} party={party} wins={wins} />
         ))}
       </div>
-
-      {hasMore && (
-        <button
-          onClick={() => setShowAll((p) => !p)}
-          className="mt-4 flex items-center gap-2 text-sm text-gray-400 hover:text-emerald-400 transition-colors"
-        >
-          <svg
-            className={`w-4 h-4 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-          {showAll ? "Show less" : `Show all ${winners.length} winners`}
-        </button>
-      )}
     </section>
   );
 }
