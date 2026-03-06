@@ -1,10 +1,16 @@
+"use client";
+import { useState } from "react";
+
 export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
+  const [showAll, setShowAll] = useState(false);
+
   if (!result || !result.candidates) return null;
 
-  const topCandidates = result.candidates.slice(0, 3);
-  const othersVotes = result.candidates
-    .slice(3)
-    .reduce((acc, c) => acc + c.votes, 0);
+  const visibleCandidates = showAll
+    ? result.candidates
+    : result.candidates.slice(0, 3);
+  const otherCandidates = result.candidates.slice(3);
+  const othersVotes = otherCandidates.reduce((acc, c) => acc + c.votes, 0);
 
   return (
     <div
@@ -49,7 +55,7 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
       </div>
 
       <div className="p-5 flex-1 flex flex-col gap-3">
-        {topCandidates.map((c, idx) => (
+        {visibleCandidates.map((c, idx) => (
           <div
             key={idx}
             className="flex items-center justify-between p-3 rounded-lg bg-gray-800/30 border border-gray-700/50"
@@ -58,7 +64,7 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
               borderLeftWidth: "4px",
             }}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0">
               {c.partyLogoUrl ? (
                 <div className="w-8 h-8 rounded-full overflow-hidden bg-white flex-shrink-0 border border-gray-600">
                   <img
@@ -74,7 +80,7 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                   {idx + 1}
                 </div>
               )}
-              <div className="flex flex-col overflow-hidden">
+              <div className="flex flex-col overflow-hidden min-w-0">
                 <span
                   className={`font-medium text-sm truncate ${idx === 0 ? "text-white" : "text-gray-300"}`}
                   title={c.romanizedName || c.name}
@@ -82,14 +88,14 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                   {c.name}
                 </span>
                 <span
-                  className="text-xs text-gray-500 truncate max-w-[140px]"
+                  className="text-xs text-gray-500 truncate"
                   title={c.party}
                 >
                   {c.party}
                 </span>
               </div>
             </div>
-            <div className="text-right flex-shrink-0">
+            <div className="text-right flex-shrink-0 ml-2">
               <span
                 className={`font-bold tabular-nums ${idx === 0 ? "text-emerald-400 text-lg" : "text-gray-300"}`}
               >
@@ -98,10 +104,35 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
             </div>
           </div>
         ))}
-        {othersVotes > 0 && (
-          <div className="mt-2 text-center text-xs text-gray-500">
+
+        {!showAll && othersVotes > 0 && (
+          <div className="px-1 text-center text-xs text-gray-500 mt-1">
             + {othersVotes.toLocaleString()} votes for other candidates
           </div>
+        )}
+
+        {otherCandidates.length > 0 && (
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="mt-1 text-center text-xs font-medium text-gray-400 hover:text-white transition-colors py-2 w-full flex items-center justify-center gap-1 rounded bg-gray-800/40 hover:bg-gray-800 border border-gray-700/50 hover:border-gray-600"
+          >
+            {showAll
+              ? "Show top 3 candidates"
+              : `See all ${result.candidates.length} candidates`}
+            <svg
+              className={`w-3.5 h-3.5 transition-transform ${showAll ? "rotate-180" : ""}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
         )}
       </div>
     </div>
