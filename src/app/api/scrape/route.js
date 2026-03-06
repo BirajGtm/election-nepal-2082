@@ -88,6 +88,83 @@ async function fetchNationalSummary() {
   }
 }
 
+async function fetchWinners() {
+  try {
+    const res = await fetch("https://election.ratopati.com/winners", {
+      cache: "no-store",
+    });
+    if (!res.ok) return [];
+    const html = await res.text();
+    const $ = cheerio.load(html);
+    const winners = [];
+
+    $(".election-card").each((_, card) => {
+      const constituency = $(card)
+        .find(".candidate-card-header h3")
+        .text()
+        .trim();
+      if (!constituency) return;
+      const firstRow = $(card).find(".candidate-row").first();
+      if (!firstRow.length) return;
+      const name = firstRow.find(".title a").text().trim();
+      if (!name) return;
+
+      const mediaDiv = firstRow.find(".candidate-media > div");
+      let party = "";
+      if (mediaDiv.length) {
+        const texts = [];
+        mediaDiv.contents().each((_, el) => {
+          if (el.nodeType === 3) {
+            const t = $(el).text().trim();
+            if (t) texts.push(t);
+          }
+        });
+        party = texts[texts.length - 1] || "";
+      }
+
+      const imgEl = firstRow.find("img");
+      const partyLogoUrl = imgEl.length ? imgEl.attr("src") : null;
+      let partyColor = "#9E9E9E";
+      if (party.includes("राष्ट्रिय स्वतन्त्र पार्टी")) partyColor = "#03A9F4";
+      else if (party.includes("नेपाली कांग्रेस")) partyColor = "#22c55e";
+      else if (party.includes("एमाले")) partyColor = "#E53935";
+      else if (party.includes("नेपाली कम्युनिष्ट पार्टी"))
+        partyColor = "#C62828";
+      else if (
+        party.includes("राष्ट्रिय प्रजातन्त्र पार्टी") ||
+        party.includes("राप्रपा")
+      )
+        partyColor = "#FF9800";
+
+      winners.push({ name, constituency, party, partyLogoUrl, partyColor });
+    });
+
+    // Fallback: plain table rows
+    if (winners.length === 0) {
+      $("table tr").each((_, row) => {
+        const cells = $(row).find("td");
+        if (cells.length < 2) return;
+        const name = $(cells[0]).text().trim();
+        const constituency = $(cells[1]).text().trim();
+        const party = cells.length > 2 ? $(cells[2]).text().trim() : "";
+        if (name && constituency && name.length > 1)
+          winners.push({
+            name,
+            constituency,
+            party,
+            partyLogoUrl: null,
+            partyColor: "#9E9E9E",
+          });
+      });
+    }
+
+    return winners;
+  } catch (error) {
+    console.error("Failed to fetch winners", error);
+    return [];
+  }
+}
+
 function parseDistrictPage(html, district) {
   const $ = cheerio.load(html);
   const results = [];
@@ -253,9 +330,10 @@ async function performScrape() {
   try {
     const allDistricts = getDistricts();
 
-    const [nationalSummary, allConstituencies] = await Promise.all([
+    const [nationalSummary, allConstituencies, winners] = await Promise.all([
       fetchNationalSummary(),
       fetchAllDistrictsConcurrently(allDistricts, 20),
+      fetchWinners(),
     ]);
 
     // Ensure we sort alphabetically or by district for predictability
@@ -335,6 +413,7 @@ async function performScrape() {
       success: true,
       nationalSummary: enrichedSummary,
       results: allConstituencies,
+      winners,
     };
     lastFetchTime = Date.now();
   } catch (error) {

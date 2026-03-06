@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import NationalSummary from "@/components/NationalSummary";
 import HotseatCard from "@/components/HotseatCard";
 import Outlook from "@/components/Outlook";
+import WonSeats from "@/components/WonSeats";
 import defaultHotseats from "@/data/hotseats.json";
 
 export default function Home() {
@@ -305,6 +306,12 @@ export default function Home() {
           </div>
         ) : data ? (
           <div className="space-y-12 animate-in fade-in duration-700">
+            {/* Won Seats Section - HIDE WHEN SEARCHING/FILTERING */}
+            {!searchQuery &&
+              !selectedParty &&
+              data.winners &&
+              data.winners.length > 0 && <WonSeats winners={data.winners} />}
+
             {/* Outlook Projection Section - HIDE WHEN SEARCHING TEXT */}
             {!searchQuery && !selectedParty && <Outlook data={data} />}
 
