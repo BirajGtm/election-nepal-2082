@@ -1,0 +1,629 @@
+[
+  {
+    "district": "Achham",
+    "num": 2,
+    "voters": {
+      "1": 82512,
+      "2": 82823
+    }
+  },
+  {
+    "district": "Arghakhanchi",
+    "num": 1,
+    "voters": {
+      "1": 171652
+    }
+  },
+  {
+    "district": "Baglung",
+    "num": 2,
+    "voters": {
+      "1": 98045,
+      "2": 95335
+    }
+  },
+  {
+    "district": "Baitadi",
+    "num": 1,
+    "voters": {
+      "1": 156370
+    }
+  },
+  {
+    "district": "Bajhang",
+    "num": 1,
+    "voters": {
+      "1": 126903
+    }
+  },
+  {
+    "district": "Bajura",
+    "num": 1,
+    "voters": {
+      "1": 87859
+    }
+  },
+  {
+    "district": "Banke",
+    "num": 3,
+    "voters": {
+      "1": 124725,
+      "2": 108284,
+      "3": 117353
+    }
+  },
+  {
+    "district": "Bara",
+    "num": 4,
+    "voters": {
+      "1": 123981,
+      "2": 113839,
+      "3": 113519,
+      "4": 0
+    }
+  },
+  {
+    "district": "Bardiya",
+    "num": 2,
+    "voters": {
+      "1": 168030,
+      "2": 155230
+    }
+  },
+  {
+    "district": "Bhaktapur",
+    "num": 2,
+    "voters": {
+      "1": 107054,
+      "2": 98351
+    }
+  },
+  {
+    "district": "Bhojpur",
+    "num": 1,
+    "voters": {
+      "1": 125765
+    }
+  },
+  {
+    "district": "Chitwan",
+    "num": 3,
+    "voters": {
+      "1": 149621,
+      "2": 137151,
+      "3": 155308
+    }
+  },
+  {
+    "district": "Dadeldhura",
+    "num": 1,
+    "voters": {
+      "1": 93403
+    }
+  },
+  {
+    "district": "Dailekh",
+    "num": 2,
+    "voters": {
+      "1": 79701,
+      "2": 81503
+    }
+  },
+  {
+    "district": "Dang",
+    "num": 3,
+    "voters": {
+      "1": 140000,
+      "2": 140964,
+      "3": 150719
+    }
+  },
+  {
+    "district": "Darchula",
+    "num": 1,
+    "voters": {
+      "1": 92948
+    }
+  },
+  {
+    "district": "Dhading",
+    "num": 2,
+    "voters": {
+      "1": 136686,
+      "2": 138592
+    }
+  },
+  {
+    "district": "Dhankuta",
+    "num": 1,
+    "voters": {
+      "1": 118425
+    }
+  },
+  {
+    "district": "Dhanusha",
+    "num": 4,
+    "voters": {
+      "1": 126038,
+      "2": 134824,
+      "3": 125923,
+      "4": 127776
+    }
+  },
+  {
+    "district": "Dolakha",
+    "num": 1,
+    "voters": {
+      "1": 170321
+    }
+  },
+  {
+    "district": "Dolpa",
+    "num": 1,
+    "voters": {
+      "1": 24115
+    }
+  },
+  {
+    "district": "Doti",
+    "num": 1,
+    "voters": {
+      "1": 128399
+    }
+  },
+  {
+    "district": "Gorkha",
+    "num": 2,
+    "voters": {
+      "1": 120524,
+      "2": 108533
+    }
+  },
+  {
+    "district": "Gulmi",
+    "num": 2,
+    "voters": {
+      "1": 122186,
+      "2": 107361
+    }
+  },
+  {
+    "district": "Humla",
+    "num": 1,
+    "voters": {
+      "1": 34372
+    }
+  },
+  {
+    "district": "Ilam",
+    "num": 2,
+    "voters": {
+      "1": 112319,
+      "2": 119487
+    }
+  },
+  {
+    "district": "Jajarkot",
+    "num": 1,
+    "voters": {
+      "1": 107089
+    }
+  },
+  {
+    "district": "Jhapa",
+    "num": 5,
+    "voters": {
+      "1": 131067,
+      "2": 147517,
+      "3": 140857,
+      "4": 130711,
+      "5": 163377
+    }
+  },
+  {
+    "district": "Jumla",
+    "num": 1,
+    "voters": {
+      "1": 71739
+    }
+  },
+  {
+    "district": "Kavrepalanchok",
+    "num": 2,
+    "voters": {
+      "1": 161099,
+      "2": 165510
+    }
+  },
+  {
+    "district": "Kailali",
+    "num": 5,
+    "voters": {
+      "1": 108490,
+      "2": 107755,
+      "3": 109118,
+      "4": 115142,
+      "5": 110536
+    }
+  },
+  {
+    "district": "Kalikot",
+    "num": 1,
+    "voters": {
+      "1": 84646
+    }
+  },
+  {
+    "district": "Kanchanpur",
+    "num": 3,
+    "voters": {
+      "1": 101724,
+      "2": 109573,
+      "3": 103087
+    }
+  },
+  {
+    "district": "Kapilvastu",
+    "num": 3,
+    "voters": {
+      "1": 147655,
+      "2": 130202,
+      "3": 118404
+    }
+  },
+  {
+    "district": "Kaski",
+    "num": 3,
+    "voters": {
+      "1": 116877,
+      "2": 84133,
+      "3": 107558
+    }
+  },
+  {
+    "district": "Kathmandu",
+    "num": 10,
+    "voters": {
+      "1": 48489,
+      "2": 88708,
+      "3": 64479,
+      "4": 76141,
+      "5": 78110,
+      "6": 67758,
+      "7": 0,
+      "8": 57811,
+      "9": 78495,
+      "10": 83299
+    }
+  },
+  {
+    "district": "Khotang",
+    "num": 1,
+    "voters": {
+      "1": 147120
+    }
+  },
+  {
+    "district": "Lalitpur",
+    "num": 3,
+    "voters": {
+      "1": 77737,
+      "2": 89082,
+      "3": 102437
+    }
+  },
+  {
+    "district": "Lamjung",
+    "num": 1,
+    "voters": {
+      "1": 137124
+    }
+  },
+  {
+    "district": "Mahottari",
+    "num": 4,
+    "voters": {
+      "1": 105644,
+      "2": 107594,
+      "3": 110436,
+      "4": 107606
+    }
+  },
+  {
+    "district": "Makwanpur",
+    "num": 2,
+    "voters": {
+      "1": 158431,
+      "2": 156898
+    }
+  },
+  {
+    "district": "Manang",
+    "num": 1,
+    "voters": {
+      "1": 7000
+    }
+  },
+  {
+    "district": "Morang",
+    "num": 6,
+    "voters": {
+      "1": 128545,
+      "2": 129183,
+      "3": 158053,
+      "4": 119254,
+      "5": 110177,
+      "6": 137831
+    }
+  },
+  {
+    "district": "Mugu",
+    "num": 1,
+    "voters": {
+      "1": 36031
+    }
+  },
+  {
+    "district": "Mustang",
+    "num": 1,
+    "voters": {
+      "1": 11327
+    }
+  },
+  {
+    "district": "Myagdi",
+    "num": 1,
+    "voters": {
+      "1": 86396
+    }
+  },
+  {
+    "district": "Nawalparasi-West",
+    "num": 2,
+    "voters": {
+      "1": 123078,
+      "2": 131075
+    }
+  },
+  {
+    "district": "Nawalparasi-East",
+    "num": 2,
+    "voters": {
+      "1": 0,
+      "2": 0
+    }
+  },
+  {
+    "district": "Nuwakot",
+    "num": 2,
+    "voters": {
+      "1": 123926,
+      "2": 123939
+    }
+  },
+  {
+    "district": "Okhaldhunga",
+    "num": 1,
+    "voters": {
+      "1": 122714
+    }
+  },
+  {
+    "district": "Panchthar",
+    "num": 1,
+    "voters": {
+      "1": 143408
+    }
+  },
+  {
+    "district": "Palpa",
+    "num": 2,
+    "voters": {
+      "1": 98383,
+      "2": 109053
+    }
+  },
+  {
+    "district": "Parsa",
+    "num": 4,
+    "voters": {
+      "1": 89636,
+      "2": 95117,
+      "3": 96538,
+      "4": 95207
+    }
+  },
+  {
+    "district": "Parbat",
+    "num": 1,
+    "voters": {
+      "1": 125465
+    }
+  },
+  {
+    "district": "Pyuthan",
+    "num": 1,
+    "voters": {
+      "1": 165405
+    }
+  },
+  {
+    "district": "Ramechhap",
+    "num": 1,
+    "voters": {
+      "1": 187952
+    }
+  },
+  {
+    "district": "Rasuwa",
+    "num": 1,
+    "voters": {
+      "1": 41470
+    }
+  },
+  {
+    "district": "Rautahat",
+    "num": 4,
+    "voters": {
+      "1": 108726,
+      "2": 108872,
+      "3": 108698,
+      "4": 110314
+    }
+  },
+  {
+    "district": "Rolpa",
+    "num": 1,
+    "voters": {
+      "1": 149597
+    }
+  },
+  {
+    "district": "Rukum-West",
+    "num": 1,
+    "voters": {
+      "1": 106659
+    }
+  },
+  {
+    "district": "Rukum-East",
+    "num": 1,
+    "voters": {
+      "1": 34772
+    }
+  },
+  {
+    "district": "Rupandehi",
+    "num": 5,
+    "voters": {
+      "1": 146822,
+      "2": 135047,
+      "3": 140033,
+      "4": 116172,
+      "5": 134440
+    }
+  },
+  {
+    "district": "Salyan",
+    "num": 1,
+    "voters": {
+      "1": 162449
+    }
+  },
+  {
+    "district": "Sankhuwasabha",
+    "num": 1,
+    "voters": {
+      "1": 119630
+    }
+  },
+  {
+    "district": "Saptari",
+    "num": 4,
+    "voters": {
+      "1": 119035,
+      "2": 105920,
+      "3": 111864,
+      "4": 109560
+    }
+  },
+  {
+    "district": "Sarlahi",
+    "num": 4,
+    "voters": {
+      "1": 130870,
+      "2": 125305,
+      "3": 134409,
+      "4": 121011
+    }
+  },
+  {
+    "district": "Sindhuli",
+    "num": 2,
+    "voters": {
+      "1": 110391,
+      "2": 104628
+    }
+  },
+  {
+    "district": "Sindhupalchok",
+    "num": 2,
+    "voters": {
+      "1": 136985,
+      "2": 138013
+    }
+  },
+  {
+    "district": "Siraha",
+    "num": 4,
+    "voters": {
+      "1": 111949,
+      "2": 115758,
+      "3": 119250,
+      "4": 106686
+    }
+  },
+  {
+    "district": "Solukhumbu",
+    "num": 1,
+    "voters": {
+      "1": 85515
+    }
+  },
+  {
+    "district": "Sunsari",
+    "num": 4,
+    "voters": {
+      "1": 150392,
+      "2": 158909,
+      "3": 134302,
+      "4": 137340
+    }
+  },
+  {
+    "district": "Surkhet",
+    "num": 2,
+    "voters": {
+      "1": 122902,
+      "2": 126041
+    }
+  },
+  {
+    "district": "Syangja",
+    "num": 2,
+    "voters": {
+      "1": 130885,
+      "2": 117930
+    }
+  },
+  {
+    "district": "Tanahun",
+    "num": 2,
+    "voters": {
+      "1": 126882,
+      "2": 127515
+    }
+  },
+  {
+    "district": "Taplejung",
+    "num": 1,
+    "voters": {
+      "1": 90327
+    }
+  },
+  {
+    "district": "Terhathum",
+    "num": 1,
+    "voters": {
+      "1": 73137
+    }
+  },
+  {
+    "district": "Udayapur",
+    "num": 2,
+    "voters": {
+      "1": 142802,
+      "2": 96122
+    }
+  }
+]
