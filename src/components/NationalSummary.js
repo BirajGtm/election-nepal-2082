@@ -36,23 +36,12 @@ export default function NationalSummary({
       </div>
 
       {/* Margin Legend */}
-      <div className="flex flex-wrap items-center justify-center gap-4 mb-6 text-xs text-gray-400 bg-gray-900/40 py-2 px-4 rounded-lg border border-gray-800/50">
-        <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>Tight
-          (&lt;15%)
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-orange-400"></span>Solid
-          (15-35%)
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-blue-400"></span>Safe
-          (35-60%)
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>Huge
-          (&gt;60%)
-        </span>
+      <div className="flex flex-wrap items-center justify-center gap-4 mb-6 text-sm text-gray-300 bg-gray-900/40 py-2 px-4 rounded-lg border border-gray-800/50">
+        <span className="font-semibold text-white mr-1">Leads Color code:</span>
+        <span className="flex items-center gap-1.5">🔴 Tight (&lt;15%)</span>
+        <span className="flex items-center gap-1.5">🟠 Solid (15-35%)</span>
+        <span className="flex items-center gap-1.5">🔵 Safe (35-60%)</span>
+        <span className="flex items-center gap-1.5">🟢 Huge (&gt;60%)</span>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
