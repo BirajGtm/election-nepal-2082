@@ -12,6 +12,10 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
   const otherCandidates = result.candidates.slice(3);
   const othersVotes = otherCandidates.reduce((acc, c) => acc + c.votes, 0);
 
+  const totalVotes = result.candidates.reduce((sum, c) => sum + c.votes, 0);
+  const leaderVotes = result.candidates[0]?.votes || 0;
+  const secondPlaceVotes = result.candidates[1]?.votes || 0;
+
   return (
     <div
       className={`bg-gray-900 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group flex flex-col h-full relative ${
@@ -107,11 +111,54 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                   />
                 </div>
               )}
-              <span
-                className={`font-bold tabular-nums ${idx === 0 ? "text-emerald-400 text-lg" : "text-gray-300"}`}
-              >
-                {c.votes.toLocaleString()}
-              </span>
+              <div className="flex flex-col items-end">
+                <span
+                  className={`font-bold tabular-nums ${idx === 0 ? "text-emerald-400 text-lg" : "text-gray-300"}`}
+                >
+                  {c.votes.toLocaleString()}
+                </span>
+
+                {totalVotes > 0 &&
+                  result.candidates.length > 1 &&
+                  (idx === 0 ? (
+                    <span className="text-[10px] text-emerald-400 font-medium flex items-center mt-0.5">
+                      <svg
+                        className="w-3 h-3 mr-0.5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 3a1 1 0 01.707.293l5 5a1 1 0 01-1.414 1.414L11 6.414V17a1 1 0 11-2 0V6.414L5.707 9.707a1 1 0 01-1.414-1.414l5-5A1 1 0 0110 3z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {(
+                        ((leaderVotes - secondPlaceVotes) / totalVotes) *
+                        100
+                      ).toFixed(1)}
+                      % Lead
+                    </span>
+                  ) : (
+                    <span className="text-[10px] text-red-400 font-medium flex items-center mt-0.5">
+                      <svg
+                        className="w-3 h-3 mr-0.5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 17a1 1 0 01-.707-.293l-5-5a1 1 0 011.414-1.414L9 13.586V3a1 1 0 112 0v10.586l3.293-3.293a1 1 0 111.414 1.414l-5 5A1 1 0 0110 17z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {(((leaderVotes - c.votes) / totalVotes) * 100).toFixed(
+                        1,
+                      )}
+                      % Behind
+                    </span>
+                  ))}
+              </div>
             </div>
           </div>
         ))}
