@@ -19,6 +19,7 @@ export default function Home() {
 
   const [pinnedSlugs, setPinnedSlugs] = useState([]);
   const [isClient, setIsClient] = useState(false);
+  const [selectedWonParty, setSelectedWonParty] = useState(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -328,13 +329,69 @@ export default function Home() {
             {!searchQuery && (
               <section>
                 <NationalSummary
-                  summary={data.nationalSummary}
+                  summary={data?.nationalSummary}
                   selectedParty={selectedParty}
-                  onSelectParty={(party) => {
-                    setSelectedParty(party);
-                    if (party && searchQuery) setSearchQuery("");
-                  }}
+                  onSelectParty={handleSelectParty}
+                  onSelectWon={setSelectedWonParty}
                 />
+
+                {/* Won Seats Modal */}
+                {selectedWonParty && (
+                  <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm">
+                    <div className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-7xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
+                      <div className="p-4 sm:p-5 border-b border-gray-800 flex justify-between items-center bg-gray-900/95 z-10">
+                        <h3 className="text-xl font-bold text-emerald-400 flex items-center gap-2">
+                          ✓ {selectedWonParty} Wins (
+                          {
+                            data.results.filter(
+                              (c) =>
+                                c.winner?.party === selectedWonParty ||
+                                c.winner?.party.includes(selectedWonParty) ||
+                                selectedWonParty.includes(c.winner?.party),
+                            ).length
+                          }
+                          )
+                        </h3>
+                        <button
+                          onClick={() => setSelectedWonParty(null)}
+                          className="p-2 -mr-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors"
+                        >
+                          <svg
+                            className="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div className="p-4 sm:p-6 overflow-y-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 bg-gray-950/50">
+                        {data.results
+                          .filter(
+                            (c) =>
+                              c.winner?.party === selectedWonParty ||
+                              c.winner?.party.includes(selectedWonParty) ||
+                              selectedWonParty.includes(c.winner?.party),
+                          )
+                          .map((hs) => (
+                            <HotseatCard
+                              key={hs.slug}
+                              result={hs}
+                              isPinned={pinnedSlugs.includes(hs.slug)}
+                              onTogglePin={togglePin}
+                              winner={hs.winner}
+                            />
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </section>
             )}
 
@@ -402,63 +459,46 @@ export default function Home() {
                   )}
 
                   {wonFiltered.length > 0 && (
-                    <>
+                    <div className="mt-8 bg-gray-900/40 border border-gray-800 rounded-2xl overflow-hidden">
                       <button
-                        onClick={() => setShowWonFiltered(true)}
-                        className="mt-8 w-full flex items-center justify-between p-4 bg-gray-900/40 border border-gray-800 rounded-2xl hover:bg-gray-800/80 transition-colors"
+                        onClick={() => setShowWonFiltered((prev) => !prev)}
+                        className="w-full flex items-center justify-between p-4 bg-gray-900/60 hover:bg-gray-800/80 transition-colors"
                       >
                         <div className="flex items-center gap-3">
                           <span className="text-emerald-400 font-bold">✓</span>
                           <span className="text-white font-medium">
-                            View Declared Winners ({wonFiltered.length})
+                            Declared Winners ({wonFiltered.length})
                           </span>
                         </div>
-                        <span className="text-sm font-medium text-blue-400 hover:text-blue-300">
-                          Open List &rarr;
-                        </span>
+                        <svg
+                          className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${showWonFiltered ? "rotate-180" : ""}`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
                       </button>
 
                       {showWonFiltered && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm">
-                          <div className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-7xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
-                            <div className="p-4 sm:p-5 border-b border-gray-800 flex justify-between items-center bg-gray-900/95 z-10">
-                              <h3 className="text-xl font-bold text-emerald-400 flex items-center gap-2">
-                                ✓ Declared Winners ({wonFiltered.length})
-                              </h3>
-                              <button
-                                onClick={() => setShowWonFiltered(false)}
-                                className="p-2 -mr-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-full transition-colors"
-                              >
-                                <svg
-                                  className="w-6 h-6"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M6 18L18 6M6 6l12 12"
-                                  />
-                                </svg>
-                              </button>
-                            </div>
-                            <div className="p-4 sm:p-6 overflow-y-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 bg-gray-950/50">
-                              {wonFiltered.map((hs) => (
-                                <HotseatCard
-                                  key={hs.slug}
-                                  result={hs}
-                                  isPinned={pinnedSlugs.includes(hs.slug)}
-                                  onTogglePin={togglePin}
-                                  winner={hs.winner}
-                                />
-                              ))}
-                            </div>
-                          </div>
+                        <div className="p-6 border-t border-gray-800 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                          {wonFiltered.map((hs) => (
+                            <HotseatCard
+                              key={hs.slug}
+                              result={hs}
+                              isPinned={pinnedSlugs.includes(hs.slug)}
+                              onTogglePin={togglePin}
+                              winner={hs.winner}
+                            />
+                          ))}
                         </div>
                       )}
-                    </>
+                    </div>
                   )}
                 </div>
               ) : isClient ? (
