@@ -34,6 +34,27 @@ export default function NationalSummary({
           </button>
         )}
       </div>
+
+      {/* Margin Legend */}
+      <div className="flex flex-wrap items-center justify-center gap-4 mb-6 text-xs text-gray-400 bg-gray-900/40 py-2 px-4 rounded-lg border border-gray-800/50">
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>Tight
+          (&lt;15%)
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-orange-400"></span>Solid
+          (15-35%)
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-blue-400"></span>Safe
+          (35-60%)
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>Huge
+          (&gt;60%)
+        </span>
+      </div>
+
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {summary.map((partyObj, idx) => {
           const isSelected = selectedParty === partyObj.party;
@@ -87,6 +108,78 @@ export default function NationalSummary({
                   </span>
                 </div>
               </div>
+
+              {partyObj.leading > 0 && partyObj.margins && (
+                <div
+                  className="mt-3 overflow-hidden text-center mx-auto"
+                  style={{ width: "90%" }}
+                >
+                  <div className="flex w-full h-1.5 rounded-full overflow-hidden bg-gray-800">
+                    {partyObj.margins.tight > 0 && (
+                      <div
+                        className="h-full bg-red-400"
+                        style={{
+                          width: `${(partyObj.margins.tight / partyObj.leading) * 100}%`,
+                        }}
+                        title={`${partyObj.margins.tight} Tight (<15%)`}
+                      />
+                    )}
+                    {partyObj.margins.solid > 0 && (
+                      <div
+                        className="h-full bg-orange-400"
+                        style={{
+                          width: `${(partyObj.margins.solid / partyObj.leading) * 100}%`,
+                        }}
+                        title={`${partyObj.margins.solid} Solid (15-35%)`}
+                      />
+                    )}
+                    {partyObj.margins.comfortable > 0 && (
+                      <div
+                        className="h-full bg-blue-400"
+                        style={{
+                          width: `${(partyObj.margins.comfortable / partyObj.leading) * 100}%`,
+                        }}
+                        title={`${partyObj.margins.comfortable} Comfortable (35-60%)`}
+                      />
+                    )}
+                    {partyObj.margins.landslide > 0 && (
+                      <div
+                        className="h-full bg-emerald-400"
+                        style={{
+                          width: `${(partyObj.margins.landslide / partyObj.leading) * 100}%`,
+                        }}
+                        title={`${partyObj.margins.landslide} Landslide (>60%)`}
+                      />
+                    )}
+                  </div>
+                  <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5 mt-1.5 text-[0.65rem] text-gray-400 leading-none">
+                    {partyObj.margins.tight > 0 && (
+                      <span>
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400 mr-0.5"></span>
+                        {partyObj.margins.tight} tight
+                      </span>
+                    )}
+                    {partyObj.margins.solid > 0 && (
+                      <span>
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-400 mr-0.5"></span>
+                        {partyObj.margins.solid} solid
+                      </span>
+                    )}
+                    {partyObj.margins.comfortable > 0 && (
+                      <span>
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-400 mr-0.5"></span>
+                        {partyObj.margins.comfortable} safe
+                      </span>
+                    )}
+                    {partyObj.margins.landslide > 0 && (
+                      <span>
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 mr-0.5"></span>
+                        {partyObj.margins.landslide} huge
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}

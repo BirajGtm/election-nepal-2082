@@ -399,16 +399,48 @@ async function performScrape() {
     // Ensure we sort alphabetically or by district for predictability
     allConstituencies.sort((a, b) => a.label.localeCompare(b.label));
 
-    // Determine all actual leading parties based on constituencies
-    const leadingCounts = {};
+    // Determine all actual leading parties based on constituencies and calculate their lead margins
+    const leadingStats = {};
     allConstituencies.forEach((c) => {
+      // Only process if no winner declared and there's a leader with votes
       if (
+        !c.winner &&
         c.candidates &&
         c.candidates.length > 0 &&
         c.candidates[0].votes > 0
       ) {
-        const party = c.candidates[0].party;
-        leadingCounts[party] = (leadingCounts[party] || 0) + 1;
+        const leader = c.candidates[0];
+        const party = leader.party;
+
+        if (!leadingStats[party]) {
+          leadingStats[party] = {
+            total: 0,
+            margins: { tight: 0, solid: 0, comfortable: 0, landslide: 0 },
+          };
+        }
+
+        leadingStats[party].total += 1;
+
+        // Calculate margin
+        if (c.candidates.length > 1) {
+          const secondPlace = c.candidates[1];
+          if (secondPlace.votes === 0) {
+            leadingStats[party].margins.landslide += 1; // 100% lead basically
+          } else {
+            const diff = leader.votes - secondPlace.votes;
+            const marginPct = (diff / secondPlace.votes) * 100;
+
+            if (marginPct < 15)
+              leadingStats[party].margins.tight += 1; // < 15% lead
+            else if (marginPct < 35)
+              leadingStats[party].margins.solid += 1; // 15-35% lead
+            else if (marginPct < 60)
+              leadingStats[party].margins.comfortable += 1; // 35-60% lead
+            else leadingStats[party].margins.landslide += 1; // 60%+ lead
+          }
+        } else {
+          leadingStats[party].margins.landslide += 1; // Unopposed
+        }
       }
     });
 
@@ -419,7 +451,7 @@ async function performScrape() {
     );
 
     // Add any party that is leading but wasn't in the explicit top summary
-    Object.keys(leadingCounts).forEach((party) => {
+    Object.keys(leadingStats).forEach((party) => {
       const exists = baseSummary.find(
         (p) =>
           p.party === party ||
@@ -427,8 +459,23 @@ async function performScrape() {
           p.party.includes(party),
       );
       if (!exists) {
-        baseSummary.push({ party, won: 0, leading: leadingCounts[party] });
+        baseSummary.push({
+          party,
+          won: 0,
+          leading: leadingStats[party].total,
+          margins: leadingStats[party].margins,
+        });
+      } else {
+        // We ensure 'leading' on existing summary matches our calculated total, and attach margins
+        exists.leading = leadingStats[party].total;
+        exists.margins = leadingStats[party].margins;
       }
+    });
+
+    // For any parties in baseSummary that aren't actually leading anywhere, ensure margins is empty
+    baseSummary.forEach((ps) => {
+      if (!ps.margins)
+        ps.margins = { tight: 0, solid: 0, comfortable: 0, landslide: 0 };
     });
 
     baseSummary.sort((a, b) => b.leading - a.leading);
