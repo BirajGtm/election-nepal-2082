@@ -330,8 +330,10 @@ export default function Home() {
               <section>
                 <NationalSummary
                   summary={data?.nationalSummary}
-                  selectedParty={selectedParty}
-                  onSelectParty={handleSelectParty}
+                  onSelectParty={(party) => {
+                    setSelectedParty(party);
+                    if (party && searchQuery) setSearchQuery("");
+                  }}
                   onSelectWon={setSelectedWonParty}
                 />
 
