@@ -15,6 +15,7 @@ export default function Home() {
   const [lastUpdated, setLastUpdated] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedParty, setSelectedParty] = useState(null);
+  const [showWonFiltered, setShowWonFiltered] = useState(false);
 
   const [pinnedSlugs, setPinnedSlugs] = useState([]);
   const [isClient, setIsClient] = useState(false);
@@ -137,6 +138,8 @@ export default function Home() {
   }, [data, searchQuery, pinnedSlugs, selectedParty]);
 
   const isFiltering = searchQuery.length > 0 || selectedParty !== null;
+  const leadingFiltered = filteredResults.filter((hs) => !hs.winner);
+  const wonFiltered = filteredResults.filter((hs) => hs.winner);
 
   return (
     <main className="min-h-screen bg-[#050505] text-gray-200 font-[family-name:var(--font-geist-sans)] selection:bg-blue-500/30">
@@ -383,16 +386,63 @@ export default function Home() {
               </div>
 
               {isClient && filteredResults.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {filteredResults.map((hs) => (
-                    <HotseatCard
-                      key={hs.slug}
-                      result={hs}
-                      isPinned={pinnedSlugs.includes(hs.slug)}
-                      onTogglePin={togglePin}
-                      winner={hs.winner}
-                    />
-                  ))}
+                <div className="space-y-6">
+                  {leadingFiltered.length > 0 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      {leadingFiltered.map((hs) => (
+                        <HotseatCard
+                          key={hs.slug}
+                          result={hs}
+                          isPinned={pinnedSlugs.includes(hs.slug)}
+                          onTogglePin={togglePin}
+                          winner={hs.winner}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {wonFiltered.length > 0 && (
+                    <div className="mt-8 bg-gray-900/40 border border-gray-800 rounded-2xl overflow-hidden">
+                      <button
+                        onClick={() => setShowWonFiltered((prev) => !prev)}
+                        className="w-full flex items-center justify-between p-4 bg-gray-900/60 hover:bg-gray-800/80 transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-emerald-400 font-bold">✓</span>
+                          <span className="text-white font-medium">
+                            Declared Winners ({wonFiltered.length})
+                          </span>
+                        </div>
+                        <svg
+                          className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${showWonFiltered ? "rotate-180" : ""}`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </button>
+
+                      {showWonFiltered && (
+                        <div className="p-6 border-t border-gray-800 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                          {wonFiltered.map((hs) => (
+                            <HotseatCard
+                              key={hs.slug}
+                              result={hs}
+                              isPinned={pinnedSlugs.includes(hs.slug)}
+                              onTogglePin={togglePin}
+                              winner={hs.winner}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               ) : isClient ? (
                 <div className="text-center py-20 bg-gray-900/50 rounded-2xl border border-gray-800 border-dashed">
