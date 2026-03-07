@@ -339,6 +339,7 @@ async function fetchDistrict(district, retries = 2) {
       const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
       const res = await fetch(`${BASE_URL}/${district}`, {
+        cache: "no-store",
         signal: controller.signal,
         headers: {
           "User-Agent": "Mozilla/5.0 (compatible; ElectionBot/1.0)",
@@ -514,28 +515,25 @@ export async function GET() {
   const now = Date.now();
 
   try {
-    // If no cache exists, we must block on the first fetch
-    if (!cachedData) {
-      if (!fetchPromise) {
-        fetchPromise = performScrape();
-      }
-      await fetchPromise;
-      if (!cachedData) throw new Error("Failed to initialize scrape data");
+    // If we have cached data and it's less than 2 minutes old, serve it instantly
+    if (cachedData && now - lastFetchTime < 120000) {
       return NextResponse.json(cachedData, {
         headers: {
-          "Cache-Control": "public, s-maxage=180, stale-while-revalidate=30",
+          "Cache-Control": "public, s-maxage=120, stale-while-revalidate=30",
         },
       });
     }
 
-    // If cache is older than 2 minutes (120,000ms), trigger background refresh
-    if (now - lastFetchTime > 120000) {
-      if (!fetchPromise) {
-        fetchPromise = performScrape(); // Non-blocking!
-      }
+    // Otherwise (no cache, or cache is expired), we MUST await the scrape.
+    // Serverless functions (Lambda/Netlify) pause execution the moment a response is returned,
+    // so background promises will hang and never finish if they aren't awaited!
+    if (!fetchPromise) {
+      fetchPromise = performScrape();
     }
+    await fetchPromise;
 
-    // Immediately return whatever is cached (stale-while-revalidate pattern)
+    if (!cachedData) throw new Error("Failed to initialize scrape data");
+
     return NextResponse.json(cachedData, {
       headers: {
         "Cache-Control": "public, s-maxage=120, stale-while-revalidate=30",
