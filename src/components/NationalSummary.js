@@ -2,7 +2,6 @@ export default function NationalSummary({
   summary,
   selectedParty,
   onSelectParty,
-  onSelectWon,
 }) {
   if (!summary || summary.length === 0) return null;
 
@@ -80,26 +79,11 @@ export default function NationalSummary({
                 {partyObj.party}
               </span>
               <div className="flex gap-4 w-full justify-center">
-                <div
-                  className={`flex flex-col items-center p-1.5 -m-1.5 rounded transition-colors ${partyObj.won > 0 ? "cursor-pointer hover:bg-white/10" : "opacity-70"}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (partyObj.won > 0 && onSelectWon) {
-                      onSelectWon(partyObj.party);
-                    }
-                  }}
-                  title={
-                    partyObj.won > 0
-                      ? `View ${partyObj.won} declared wins for ${partyObj.party}`
-                      : undefined
-                  }
-                >
+                <div className="flex flex-col items-center">
                   <span className="text-xs text-gray-500 uppercase tracking-wider mb-1">
                     Won
                   </span>
-                  <span
-                    className={`text-xl font-bold ${partyObj.won > 0 ? "text-emerald-400" : "text-gray-600"}`}
-                  >
+                  <span className="text-xl font-bold text-emerald-400">
                     {partyObj.won}
                   </span>
                 </div>
