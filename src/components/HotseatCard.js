@@ -121,41 +121,37 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                 {totalVotes > 0 &&
                   result.candidates.length > 1 &&
                   (idx === 0 ? (
-                    <span className="text-[10px] text-emerald-400 font-medium flex items-center mt-0.5">
+                    <span
+                      className="text-[10.5px] text-emerald-400 font-semibold flex items-center mt-0.5"
+                      title="Lead Margin"
+                    >
                       <svg
-                        className="w-3 h-3 mr-0.5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                        className="w-2.5 h-2.5 mr-0.5 pb-[0.5px] fill-current"
+                        viewBox="0 0 24 24"
                       >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 3a1 1 0 01.707.293l5 5a1 1 0 01-1.414 1.414L11 6.414V17a1 1 0 11-2 0V6.414L5.707 9.707a1 1 0 01-1.414-1.414l5-5A1 1 0 0110 3z"
-                          clipRule="evenodd"
-                        />
+                        <path d="M12 4l8 12H4z" />
                       </svg>
                       {(
                         ((leaderVotes - secondPlaceVotes) / totalVotes) *
                         100
                       ).toFixed(1)}
-                      % Lead
+                      %
                     </span>
                   ) : (
-                    <span className="text-[10px] text-red-400 font-medium flex items-center mt-0.5">
+                    <span
+                      className="text-[10.5px] text-red-400 font-semibold flex items-center mt-0.5"
+                      title="Margin Behind Leader"
+                    >
                       <svg
-                        className="w-3 h-3 mr-0.5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                        className="w-2.5 h-2.5 mr-0.5 pt-[0.5px] fill-current"
+                        viewBox="0 0 24 24"
                       >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 17a1 1 0 01-.707-.293l-5-5a1 1 0 011.414-1.414L9 13.586V3a1 1 0 112 0v10.586l3.293-3.293a1 1 0 111.414 1.414l-5 5A1 1 0 0110 17z"
-                          clipRule="evenodd"
-                        />
+                        <path d="M12 20l-8-12h16z" />
                       </svg>
                       {(((leaderVotes - c.votes) / totalVotes) * 100).toFixed(
                         1,
                       )}
-                      % Behind
+                      %
                     </span>
                   ))}
               </div>
