@@ -65,7 +65,7 @@ async function fetchNationalSummary(retries = 2) {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
-      const res = await fetch("https://election.ratopati.com/", {
+      const res = await fetch("https://election.ratopati.com/result", {
         cache: "no-store",
         signal: controller.signal,
         headers: {
