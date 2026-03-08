@@ -69,9 +69,9 @@ export default function Outlook({ data }) {
   );
   const prThreshold = totalPRVotes * THRESHOLD_PCT;
 
-  // Eligible: passes 3% PR threshold
+  // Eligible: passes 3% PR threshold and is NOT an independent candidate
   const eligibleParties = data.nationalSummary.filter(
-    (p) => (p.prVotes || 0) >= prThreshold,
+    (p) => (p.prVotes || 0) >= prThreshold && p.party !== "स्वतन्त्र",
   );
   const eligiblePRTotal = eligibleParties.reduce(
     (sum, p) => sum + (p.prVotes || 0),
