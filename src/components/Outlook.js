@@ -176,6 +176,18 @@ export default function Outlook({ data }) {
     }
   }
 
+  const totalPRValidVotes = totalPRVotes; // Already calculated at line 66
+
+  const sortedByPR = [...data.nationalSummary].sort(
+    (a, b) => (b.prVotes || 0) - (a.prVotes || 0),
+  );
+  const topPRPartyObj = sortedByPR.length > 0 ? sortedByPR[0] : null;
+
+  const topPRPartyPercentage =
+    totalPRValidVotes > 0 && topPRPartyObj
+      ? (((topPRPartyObj.prVotes || 0) / totalPRValidVotes) * 100).toFixed(1)
+      : 0;
+
   return (
     <div className="bg-gradient-to-r from-blue-900/20 to-indigo-900/20 border border-blue-900/40 rounded-xl p-5 mb-8 relative overflow-hidden shadow-lg backdrop-blur-sm">
       <div className="absolute top-0 left-0 w-1 h-full bg-blue-500 rounded-l-xl"></div>
@@ -249,25 +261,53 @@ export default function Outlook({ data }) {
         )}
       </div>
 
-      <p className="text-sm md:text-base leading-relaxed text-blue-100/80 mt-4 border-t border-blue-900/40 pt-4">
-        Out of the{" "}
-        <span className="text-white font-medium">
-          {totalValidVotes.toLocaleString()}
-        </span>{" "}
-        valid votes counted so far,{" "}
-        <span className="text-white font-bold">
-          {topPartyObj?.party || "the leading party"}
-        </span>{" "}
-        has secured{" "}
-        <span className="text-white font-medium">
-          {leadingPartyTotalVotes.toLocaleString()}
-        </span>{" "}
-        votes, representing{" "}
-        <span className="text-white font-bold text-lg">
-          {topPartyPercentage}%
-        </span>{" "}
-        of the total popular vote.
-      </p>
+      <div className="text-sm md:text-base leading-relaxed text-blue-100/80 mt-4 border-t border-blue-900/40 pt-4 space-y-3">
+        <p>
+          <span className="font-bold text-white uppercase text-xs bg-blue-500/20 px-2 py-0.5 rounded border border-blue-500/30 mr-2">
+            प्रत्यक्ष (FPTP)
+          </span>
+          Out of the{" "}
+          <span className="text-white font-medium">
+            {totalValidVotes.toLocaleString()}
+          </span>{" "}
+          tracked votes,{" "}
+          <span className="text-white font-bold">
+            {topPartyObj?.party || "the leading party"}
+          </span>{" "}
+          has secured{" "}
+          <span className="text-white font-medium">
+            {leadingPartyTotalVotes.toLocaleString()}
+          </span>{" "}
+          votes, representing{" "}
+          <span className="text-white font-bold text-lg">
+            {topPartyPercentage}%
+          </span>{" "}
+          of the FPTP popular vote.
+        </p>
+
+        {totalPRValidVotes > 0 && topPRPartyObj && (
+          <p>
+            <span className="font-bold text-white uppercase text-xs bg-indigo-500/20 px-2 py-0.5 rounded border border-indigo-500/30 mr-2">
+              समानुपातिक (PR)
+            </span>
+            Out of the{" "}
+            <span className="text-white font-medium">
+              {totalPRValidVotes.toLocaleString()}
+            </span>{" "}
+            counted PR votes,{" "}
+            <span className="text-white font-bold">{topPRPartyObj.party}</span>{" "}
+            is leading with{" "}
+            <span className="text-white font-medium">
+              {(topPRPartyObj.prVotes || 0).toLocaleString()}
+            </span>{" "}
+            votes, capturing{" "}
+            <span className="text-white font-bold text-lg">
+              {topPRPartyPercentage}%
+            </span>{" "}
+            of the national proportional vote.
+          </p>
+        )}
+      </div>
     </div>
   );
 }
