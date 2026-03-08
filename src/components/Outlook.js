@@ -105,6 +105,7 @@ export default function Outlook({ data }) {
 
   // Calculate Total Predicted Seats per Party
   const partyPredictions = data.nationalSummary
+    .filter((p) => p.party !== "स्वतन्त्र")
     .map((p) => {
       const won = p.won || 0;
       // Safe leads: Comfortable (35-60%) + Landslide (>60%)
