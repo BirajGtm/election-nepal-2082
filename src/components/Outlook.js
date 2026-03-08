@@ -126,6 +126,56 @@ export default function Outlook({ data }) {
     .filter((p) => p.totalPredicted > 0)
     .sort((a, b) => b.totalPredicted - a.totalPredicted);
 
+  let govFormationText = null;
+  const topParty = partyPredictions[0];
+  if (topParty) {
+    const isRSP = topParty.party === "राष्ट्रिय स्वतन्त्र पार्टी";
+    const pmText = isRSP
+      ? " With this mandate, Balen Shah (बालेन्द्र शाह) is projected to become the next Prime Minister!"
+      : " They are projected to form the next government.";
+
+    if (topParty.totalPredicted >= 184) {
+      govFormationText = (
+        <p className="text-sm md:text-base leading-relaxed text-blue-100 mt-2 mb-6 bg-blue-900/30 p-4 rounded-lg border border-blue-500/20">
+          <span className="text-2xl mr-2">🏛️</span>
+          <span className="font-bold text-emerald-400">
+            {topParty.party}
+          </span>{" "}
+          is projected to secure a historic{" "}
+          <span className="font-bold text-white">Two-Thirds Majority</span> (
+          {topParty.totalPredicted} seats, 184+ required) out of 275.{pmText}
+        </p>
+      );
+    } else if (topParty.totalPredicted >= 138) {
+      govFormationText = (
+        <p className="text-sm md:text-base leading-relaxed text-blue-100 mt-2 mb-6 bg-blue-900/30 p-4 rounded-lg border border-blue-500/20">
+          <span className="text-2xl mr-2">🏛️</span>
+          <span className="font-bold text-emerald-400">
+            {topParty.party}
+          </span>{" "}
+          is on track to secure a{" "}
+          <span className="font-bold text-white">Majority</span> (
+          {topParty.totalPredicted} seats, 138+ required) out of 275.{pmText}
+        </p>
+      );
+    } else {
+      govFormationText = (
+        <p className="text-sm md:text-base leading-relaxed text-blue-100 mt-2 mb-6 bg-blue-900/30 p-4 rounded-lg border border-blue-500/20">
+          <span className="text-2xl mr-2">⚖️</span>
+          <span className="font-bold text-blue-400 mb-1 block">
+            Hung Parliament Projected
+          </span>
+          Currently, no single party is projected to reach the{" "}
+          <span className="font-bold text-white">138-seat</span> majority mark
+          out of 275. A coalition government will likely be required, with{" "}
+          <span className="font-bold text-white">{topParty.party}</span> leading
+          the negotiations as the largest party with {topParty.totalPredicted}{" "}
+          predicted seats.
+        </p>
+      );
+    }
+  }
+
   return (
     <div className="bg-gradient-to-r from-blue-900/20 to-indigo-900/20 border border-blue-900/40 rounded-xl p-5 mb-8 relative overflow-hidden shadow-lg backdrop-blur-sm">
       <div className="absolute top-0 left-0 w-1 h-full bg-blue-500 rounded-l-xl"></div>
@@ -135,6 +185,8 @@ export default function Outlook({ data }) {
           Seat Prediction Overview
         </strong>
       </div>
+
+      {govFormationText}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-5 max-h-96 overflow-y-auto pr-2">
         {partyPredictions.map((pp, idx) => (
