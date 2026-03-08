@@ -69,9 +69,9 @@ export default function Outlook({ data }) {
   );
   const prThreshold = totalPRVotes * THRESHOLD_PCT;
 
-  // Eligible: at least 1 FPTP win AND passes 3% PR threshold
+  // Eligible: passes 3% PR threshold
   const eligibleParties = data.nationalSummary.filter(
-    (p) => (p.won || 0) >= 1 && (p.prVotes || 0) >= prThreshold,
+    (p) => (p.prVotes || 0) >= prThreshold,
   );
   const eligiblePRTotal = eligibleParties.reduce(
     (sum, p) => sum + (p.prVotes || 0),

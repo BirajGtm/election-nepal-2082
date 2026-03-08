@@ -429,7 +429,7 @@ async function performScrape() {
             leadingStats[party].margins.landslide += 1; // 100% lead basically
           } else {
             const diff = leader.votes - secondPlace.votes;
-            const marginPct = (diff / secondPlace.votes) * 100;
+            const marginPct = (diff / leader.votes) * 100;
 
             if (marginPct < 15)
               leadingStats[party].margins.tight += 1; // < 15% lead

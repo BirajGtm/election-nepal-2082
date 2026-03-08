@@ -12,7 +12,6 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
   const otherCandidates = result.candidates.slice(3);
   const othersVotes = otherCandidates.reduce((acc, c) => acc + c.votes, 0);
 
-  const totalVotes = result.candidates.reduce((sum, c) => sum + c.votes, 0);
   const leaderVotes = result.candidates[0]?.votes || 0;
   const secondPlaceVotes = result.candidates[1]?.votes || 0;
 
@@ -118,7 +117,7 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                   {c.votes.toLocaleString()}
                 </span>
 
-                {totalVotes > 0 &&
+                {leaderVotes > 0 &&
                   result.candidates.length > 1 &&
                   (idx === 0 ? (
                     <span
@@ -132,7 +131,7 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                         <path d="M12 4l8 12H4z" />
                       </svg>
                       {(
-                        ((leaderVotes - secondPlaceVotes) / totalVotes) *
+                        ((leaderVotes - secondPlaceVotes) / leaderVotes) *
                         100
                       ).toFixed(1)}
                       %
@@ -148,7 +147,7 @@ export default function HotseatCard({ result, isPinned, onTogglePin, winner }) {
                       >
                         <path d="M12 20l-8-12h16z" />
                       </svg>
-                      {(((leaderVotes - c.votes) / totalVotes) * 100).toFixed(
+                      {(((leaderVotes - c.votes) / leaderVotes) * 100).toFixed(
                         1,
                       )}
                       %
